@@ -181,3 +181,5 @@ Likewise, P38398 has many disordered regions, and DP00238r008 spans positions 10
 Once again AlphaFold2 and AlphaFold3 have low pLDDT in this region (with a few exceptions), but ESMFold2 has high pLDDT (up until the truncated length of 700).
 
 To confirm whether the ESMFold2 predictions are single sequence, rerun with MSAs using the [Colab notebook](https://colab.research.google.com/github/biohub/esm/blob/main/cookbook/tutorials/esmfold2.ipynb) (or locally).
+
+Think more about any relevance to the 686 "Disorder / low complexity" features from the manuscript (Figure 4B).
