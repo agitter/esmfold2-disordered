@@ -1,7 +1,3 @@
-# Disordered regions in predicted protein structures
-Exploration of whether ESMFold2 has high pLDDT disordered regions of proteins for which AlphaFold2 has low pLDDT.
-Prompted by my [anecdotal observation](https://x.com/anthonygitter/status/2059738561037963602).
-
 ## Disorder region structure prediction analysis
 
 Comparison of per-residue pLDDT confidence across AlphaFold2, AlphaFold3, and ESMFold2 for 15 intrinsically disordered proteins from [DisProt](https://disprot.org). AlphaFold2 predictions are full-length database downloads; AlphaFold3 and ESMFold2 predictions use the first 700 residues for sequences longer than 700 amino acids. pLDDT values are aligned to the full UniProt reference sequence.
@@ -134,50 +130,3 @@ Comparison of per-residue pLDDT confidence across AlphaFold2, AlphaFold3, and ES
 
 ![pLDDT plot for O94687](analysis/O94687_plddt.png)
 
-## Methods
-`DisProt_release_2025_12.tsv` is from https://disprot.org/download.
-
-Run a script on that file to add sequences and sequence prefixes:
-```
-$ python process_disprot.py DisProt_release_2025_12.tsv DisProt_release_2025_12_seqs.tsv
-Loading DisProt_release_2025_12.tsv …
-  10,399 rows, 2,341 unique UniProt ACCs
-  Removed 0 obsolete rows → 10,399 remaining
-  After deduplication: 2,341 unique proteins
-Fetching sequences for 2,341 proteins from UniProt …
-  [1/2341] Q5NJL5
-  ...
-  [2341/2341] O95071
-Done! Wrote 2,341 rows to DisProt_release_2025_12_seqs.tsv
-  [NOTE] 4 protein(s) had no sequence returned from UniProt.
-```
-The four proteins without sequences are no longer available in UniProtKB.
-
-To generate structures and structure screenshots:
-- Take "Sequence Truncated" sequence and predict structure with ESMFold2 at https://biohub.ai/tools/fold with the model esmfold2-2026-05. The web server does not explicitly state whether this is single sequence or MSA-conditioned prediction. I assume single sequence for now.
-- Take "Sequence Truncated" sequence and predict structure with AlphaFold3 at https://alphafoldserver.com/.
-- Download AlphaFold2 structure from UniProt.
-
-The next script creates a summary table and line graphs of pLDDT across the three prediction methods:
-```
-$ python generate_analysis.py --tsv DisProt_release_2025_12_seqs.tsv --workdir .
-Loading metadata from DisProt_release_2025_12_seqs.tsv …
-  Found structure files for 15 proteins.
-
-── Q5NJL5 (Late embryogenesis abundant protein, 358 aa) ──
-  AF2:     358 residues parsed from PDB
-  AF3:     358 residues parsed from zip/CIF
-  ESMFold: 358 residues parsed from CIF
-  Plot saved → analysis\Q5NJL5_plddt.png
-...
-```
-
-## Future work
-Did not yet annotate the line graphs with the disordered regions from DisProt, which is a possible extension.
-For now, we can manually inspect these in `DisProt_release_2025_12.tsv`.
-For example, O94687 has disordered region with ID DP02421r002 that starts at 117 and ends at 452.
-This matches the region of low AlphaFold2 and AlphaFold3 pLDDT, but ESMFold2 has high pLDDT in this region.
-Likewise, P38398 has many disordered regions, and DP00238r008 spans positions 100 to 1649.
-Once again AlphaFold2 and AlphaFold3 have low pLDDT in this region (with a few exceptions), but ESMFold2 has high pLDDT (up until the truncated length of 700).
-
-To confirm whether the ESMFold2 predictions are single sequence, rerun with MSAs using the [Colab notebook](https://colab.research.google.com/github/biohub/esm/blob/main/cookbook/tutorials/esmfold2.ipynb) (or locally).
