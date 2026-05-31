@@ -3,6 +3,8 @@ Exploration of whether ESMFold2 has high pLDDT disordered regions of proteins fo
 Prompted by my [anecdotal observation](https://x.com/anthonygitter/status/2059738561037963602).
 [Ayushman Mallick](https://x.com/AyushmanMallick/status/2060780580690907584) reported the same issue on Twitter.
 
+I opened a [GitHub issue](https://github.com/Biohub/esm/issues/326) to discuss this.
+
 ## Disorder region structure prediction analysis
 
 Comparison of per-residue pLDDT confidence across AlphaFold2, AlphaFold3, and ESMFold2 for 15 intrinsically disordered proteins from [DisProt](https://disprot.org). AlphaFold2 predictions are full-length database downloads; AlphaFold3 and ESMFold2 predictions use the first 700 residues for sequences longer than 700 amino acids. pLDDT values are aligned to the full UniProt reference sequence.
