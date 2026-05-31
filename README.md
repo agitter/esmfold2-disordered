@@ -1,6 +1,7 @@
 # Disordered regions in predicted protein structures
 Exploration of whether ESMFold2 has high pLDDT disordered regions of proteins for which AlphaFold2 has low pLDDT.
 Prompted by my [anecdotal observation](https://x.com/anthonygitter/status/2059738561037963602).
+[Ayushman Mallick](https://x.com/AyushmanMallick/status/2060780580690907584) reported the same issue on Twitter.
 
 ## Disorder region structure prediction analysis
 
